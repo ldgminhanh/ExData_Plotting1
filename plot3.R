@@ -1,0 +1,10 @@
+dataset <- read.table("C:/Users/kimmi/Desktop/household_power_consumption.txt", header = T, sep = ";")
+dataset$Date <- as.Date(dataset$Date, "%d/%m/%Y")
+subsetdata <- dataset[dataset$Date >= "2007-02-01" & dataset$Date <= "2007-02-02", ]
+subsetdata$datetime <- as.POSIXct(paste(subsetdata$Date, subsetdata$Time), format = "%Y-%m-%d %H:%M:%S")
+png("plot3.png")
+plot(subsetdata$datetime, subsetdata$Sub_metering_1,xlab = " ", ylab = "Energy sub metering", type = "l")
+points(subsetdata$datetime,subsetdata$Sub_metering_2, type = "l", col = "red")
+points(subsetdata$datetime,subsetdata$Sub_metering_3, type = "l", col = "blue")
+legend("topright", legend = c("sub_metering_1","sub_metering_2","sub_metering_3"), col = c("black", "red", "blue"), lty = 1)
+dev.off()
